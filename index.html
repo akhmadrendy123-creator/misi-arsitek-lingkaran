@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Arsitek: Keliling Lingkaran</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <section id="scene-1" class="scene active">
+            <h1>Misi Arsitek: Menemukan Rahasia Taman Lingkaran</h1>
+            <div class="character-box">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/150?text=El+Sabar'">
+                <p class="dialogue">"Halo, namaku El Sabar! Aku akan menemani kalian belajar. Yuk, kita mulai misi arsitek ini!"</p>
+            </div>
+            <button class="btn-primary" onclick="nextScene(2)">Mulai Misi</button>
+        </section>
+
+        <section id="scene-2" class="scene">
+            <h2>Kegiatan 1: Laboratorium Pengukuran</h2>
+            <p>Geser penggeser di bawah ini untuk mengubah ukuran lingkaran. Klik kotak biru di bawah untuk melihat rahasia rumusnya!</p>
+            
+            <div class="interactive-box" style="text-align: center;">
+                <label for="sliderDiameter" style="font-weight: bold; font-size: 18px;">
+                    Atur Diameter (d): <span id="nilaiDText" style="color: #dc3545;">10</span>
+                </label><br>
+                <input type="range" id="sliderDiameter" min="1" max="20" value="10" step="1" oninput="updateLingkaran()" style="width: 80%; margin: 15px 0;">
+
+                <div class="circle-container">
+                    <div id="visualLingkaran" class="visual-lingkaran">
+                        <div class="garis-diameter"></div>
+                    </div>
+                </div>
+
+                <div class="kalkulasi-box">
+                    <p style="font-size: 16px; margin: 5px 0;">Hasil Pengukuran Keliling (K) = <strong style="color:#28a745;"><span id="calcK">31.41592654</span></strong></p>
+                    <p style="font-size: 16px; margin: 5px 0;">Hasil Pengukuran Diameter (d) = <strong><span id="calcD">10</span></strong></p>
+                    
+                    <div class="aljabar-container" id="aljabarArea" onclick="toggleAljabar()"></div>
+                </div>
+            </div>
+
+            <div class="character-box small">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
+                <p class="dialogue" style="font-size: 14px;">"Coba klik kotak perbandingan di atas! Kamu akan melihat bagaimana konsep pecahan berubah menjadi rumus keliling lingkaran lewat aljabar!"</p>
+            </div>
+            
+            <button class="btn-primary" onclick="nextScene(3)">Lanjut ke Misi 2</button>
+        </section>
+
+        <section id="scene-3" class="scene">
+            <h2>Kegiatan 2: Proyek Pembangunan Jalan</h2>
+            <p>Hitung dengan teliti dan pilih jawaban yang benar!</p>
+            
+            <div class="interactive-box blueprint-bg">
+                <div class="level-badge" id="levelBadge">Proyek 1: Taman Kecil</div>
+
+                <div class="visual-soal-container">
+                    <img id="gambarSoal" src="assets/obj-taman.png" alt="Objek Soal" class="animasi-mengambang">
+                </div>
+
+                <p id="teksSoal" class="soal-teks">Jari-jari (r) taman adalah 7 meter. Berapa kelilingnya?</p>
+                <p id="teksPetunjuk" class="petunjuk-teks">(Petunjuk: Gunakan π = 22/7)</p>
+
+                <div class="options-grid" id="tempatPilihan"></div>
+
+                <div id="skorBox" class="skor-box" style="display: none;">
+                    <p>Skor Sementaramu:</p>
+                    <h1 id="nilaiSkor">0</h1>
+                </div>
+
+                <p id="feedbackKuis" class="result-text" style="color: white; margin-top:15px;"></p>
+            </div>
+
+            <div class="character-box small" id="charBoxKuis">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
+                <p class="dialogue" id="dialogueKuis" style="font-size: 14px;">"Ayo hitung dengan teliti sebelum memilih! Jika salah tebak, poinmu akan berkurang."</p>
+            </div>
+
+            <button class="btn-primary" id="btnLanjutRefleksi" style="display:none;" onclick="nextScene(4)">Lanjut ke Laporan Akhir</button>
+        </section>
+
+        <section id="scene-4" class="scene">
+            <h2>Laporan Akhir Misi</h2>
+            
+            <div class="reflection-box">
+                <div style="background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <p style="margin-top: 0; font-weight: bold;">Isi Identitas Dulu Ya!</p>
+                    <input type="text" id="inputNama" placeholder="Nama Lengkap" style="width: 100%; margin-bottom: 10px;" required>
+                    <input type="text" id="inputKelas" placeholder="Kelas / Kelompok" style="width: 100%;" required>
+                </div>
+
+                <p>1. Bagaimana keseruan kerja kelompok hari ini?</p>
+                <div class="rating">
+                    <span onclick="setRating(this, 'Kurang Seru')">😠</span>
+                    <span onclick="setRating(this, 'Biasa Saja')">😐</span>
+                    <span onclick="setRating(this, 'Seru')">🙂</span>
+                    <span onclick="setRating(this, 'Sangat Seru')">🤩</span>
+                </div>
+
+                <p>2. Bagian mana yang masih membingungkan?</p>
+                <div class="tags">
+                    <button class="tag" onclick="toggleTag(this)">Menghitung Keliling Lingkaran</button>
+                    <button class="tag" onclick="toggleTag(this)">Perbandingan Keliling & Diameter Lingkaran</button>
+                    <button class="tag" onclick="toggleTag(this)">Beda Jari-jari & Diameter</button>
+                    <button class="tag" onclick="toggleTag(this)">Saya Paham Semua!</button>
+                </div>
+
+                <p>3. Buat pantun tentang lingkaran!</p>
+                <div class="chat-container">
+                    <div id="chat-history"></div>
+                    <input type="text" id="inputPantun" placeholder="Ketik pantunmu di sini...">
+                    <button class="btn-secondary" onclick="kirimPantun()">Kirim</button>
+                </div>
+            </div>
+
+            <button class="btn-primary finish-btn" onclick="prosesLaporan()">Selesai & Kirim Laporan</button>
+        </section>
+
+        <section id="scene-5" class="scene">
+            <h1 style="color: #28a745;">Misi Selesai!</h1>
+            <p>Selamat! Kamu telah menjadi Arsitek Taman Ahli.</p>
+            
+            <div class="medal-box">
+                <img src="assets/lencana.png" alt="Lencana Arsitek" style="width: 150px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));">
+                <br><br>
+                <a href="assets/lencana.png" download="Lencana_Arsitek_Lingkaran.png" class="btn-secondary" style="text-decoration: none; display: inline-block;">🏆 Unduh Lencana</a>
+            </div>
+
+            <div class="character-box">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/150?text=El+Sabar'">
+                <p class="dialogue">"Satu langkah lagi! Jangan lupa laporkan hasil kerjamu ke guru ya!"</p>
+            </div>
+
+            <button class="btn-primary" onclick="kirimKeWhatsApp()" style="background-color: #25D366; font-size: 18px;">
+                📱 Kirim Laporan via WhatsApp
+            </button>
+        </section>
+
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
