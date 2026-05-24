@@ -23,7 +23,7 @@
         </section>
 
         <section id="scene-2" class="scene">
-            <h2>Kegiatan 1: Laboratorium Pengukuran</h2>
+            <h2>Kegiatan 1A: Laboratorium Pengukuran Pi</h2>
             <p>Geser penggeser di bawah ini untuk mengubah ukuran lingkaran. Klik kotak biru di bawah untuk melihat rahasia rumusnya!</p>
             
             <div class="interactive-box" style="text-align: center;">
@@ -48,13 +48,58 @@
 
             <div class="character-box small">
                 <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
-                <p class="dialogue" style="font-size: 14px;">"Coba klik kotak perbandingan di atas! Kamu akan melihat bagaimana konsep pecahan berubah menjadi rumus keliling lingkaran lewat aljabar!"</p>
+                <p class="dialogue" style="font-size: 14px;">"Luar biasa! Sekarang yuk kita pelajari rahasia penting lainnya tentang jari-jari dan diameter di lab berikutnya!"</p>
             </div>
             
-            <button class="btn-primary" onclick="nextScene(3)">Lanjut ke Misi 2</button>
+            <button class="btn-primary" onclick="nextScene(3)">Lanjut ke Lab Jari-jari & Diameter</button>
         </section>
 
         <section id="scene-3" class="scene">
+            <h2>Kegiatan 1B: Eksplorasi Jari-jari vs Diameter</h2>
+            <p>Coba geser salah satu penggeser di bawah ini dan perhatikan bagaimana nilai keduanya saling berhubungan!</p>
+            
+            <div class="interactive-box" style="text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <label for="sliderR" style="font-weight: bold; font-size: 16px; color: #0284c7;">
+                        Atur Jari-jari (r): <span id="textR">5</span> meter
+                    </label><br>
+                    <input type="range" id="sliderR" min="0.5" max="10" value="5" step="0.5" oninput="updateRvsD('r')" style="width: 80%;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="sliderD2" style="font-weight: bold; font-size: 16px; color: #b91c1c;">
+                        Atur Diameter (d): <span id="textD2">10</span> meter
+                    </label><br>
+                    <input type="range" id="sliderD2" min="1" max="20" value="10" step="1" oninput="updateRvsD('d')" style="width: 80%;">
+                </div>
+
+                <div class="circle-container">
+                    <div id="visualLingkaran2" class="visual-lingkaran" style="width: 100px; height: 100px;">
+                        <div class="garis-radius"></div>
+                        <div class="garis-diameter2"></div>
+                    </div>
+                </div>
+
+                <div class="kalkulasi-box" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
+                    <p style="font-size: 20px; font-weight: bold; color: #16a34a; margin: 5px 0;">Hubungan Unsur:</p>
+                    <p style="font-size: 18px; margin: 10px 0;">
+                        Diameter (d) = 2 × Jari-jari (r) &rarr; <strong style="color:#b91c1c;"><span id="formulaD">10</span></strong> = 2 × <strong style="color:#0284c7;"><span id="formulaR">5</span></strong>
+                    </p>
+                    <p style="font-size: 14px; color: #666; font-style: italic;">
+                        "Ingat! Jari-jari adalah setengah dari diameter. Jadi jika di kuis diketahui jari-jari, kalikan dua dulu untuk mendapat diameternya!"
+                    </p>
+                </div>
+            </div>
+
+            <div class="character-box small">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
+                <p class="dialogue" style="font-size: 14px;">"Sudah paham kan bedanya? Sekarang, mari kita uji kemampuan arsitekturmu di kuis proyek pembangunan!"</p>
+            </div>
+            
+            <button class="btn-primary" onclick="nextScene(4)">Mulai Proyek Pembangunan (Kuis)</button>
+        </section>
+
+        <section id="scene-4" class="scene">
             <h2>Kegiatan 2: Proyek Pembangunan Jalan</h2>
             <p>Hitung dengan teliti dan pilih jawaban yang benar!</p>
             
@@ -83,10 +128,10 @@
                 <p class="dialogue" id="dialogueKuis" style="font-size: 14px;">"Ayo hitung dengan teliti sebelum memilih! Jika salah tebak, poinmu akan berkurang."</p>
             </div>
 
-            <button class="btn-primary" id="btnLanjutRefleksi" style="display:none;" onclick="nextScene(4)">Lanjut ke Laporan Akhir</button>
+            <button class="btn-primary" id="btnLanjutRefleksi" style="display:none;" onclick="nextScene(5)">Lanjut ke Laporan Akhir</button>
         </section>
 
-        <section id="scene-4" class="scene">
+        <section id="scene-5" class="scene">
             <h2>Laporan Akhir Misi</h2>
             
             <div class="reflection-box">
@@ -123,7 +168,7 @@
             <button class="btn-primary finish-btn" onclick="prosesLaporan()">Selesai & Kirim Laporan</button>
         </section>
 
-        <section id="scene-5" class="scene">
+        <section id="scene-6" class="scene">
             <h1 style="color: #28a745;">Misi Selesai!</h1>
             <p>Selamat! Kamu telah menjadi Arsitek Taman Ahli.</p>
             
