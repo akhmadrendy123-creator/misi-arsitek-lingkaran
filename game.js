@@ -1,10 +1,9 @@
-// --- PENGATURAN GURU (Ganti dengan Nomor WA Anda) ---
-// Gunakan format 62 diawal, tanpa angka 0, tanpa spasi/tanda hubung.
-const nomorWhatsAppGuru = "62895326772959"; 
+// --- PENGATURAN GURU (Ubah Nomor Anda di Sini) ---
+const nomorWhatsAppGuru = "6281234567890"; 
 
-// --- Variabel Penyimpan Data Rekap ---
 let pantunTerakhir = "- Belum menulis pantun -";
 let nilaiPerasaan = "Belum diisi";
+let totalScene = 6; // Total ada 6 layar sekarang
 
 // --- Fungsi Navigasi Antar Layar ---
 function nextScene(sceneNumber) {
@@ -13,12 +12,12 @@ function nextScene(sceneNumber) {
     document.getElementById('scene-' + sceneNumber).classList.add('active');
 
     let progressBar = document.getElementById('progress-bar');
-    // Jika masuk scene 5 (Layar akhir), progress bar penuh 100%
-    let progressValue = (sceneNumber > 4) ? 100 : (sceneNumber * 25);
+    let progressValue = (sceneNumber === totalScene) ? 100 : ((sceneNumber - 1) * 20);
     progressBar.style.width = progressValue + "%";
 
     if (sceneNumber === 2) updateLingkaran(); 
-    if (sceneNumber === 3 && currentLevel === 0) renderKuis();
+    if (sceneNumber === 3) updateRvsD('r'); // Inisialisasi awal Lab R vs D
+    if (sceneNumber === 4 && currentLevel === 0) renderKuis();
 }
 
 // --- Logika Scene 2: Variasi Eksperimen & Transformasi Aljabar ---
@@ -73,7 +72,34 @@ function updateLingkaran() {
     visualLingkaran.style.height = ukuranPx + "px";
 }
 
-// --- Logika Scene 3: Kuis Kartu Interaktif & SKORING ---
+// --- Logika Scene 3: SIMULASI BARU (Jari-jari vs Diameter) ---
+function updateRvsD(pemicu) {
+    let sliderR = document.getElementById('sliderR');
+    let sliderD = document.getElementById('sliderD2');
+    let r = parseFloat(sliderR.value);
+    let d = parseFloat(sliderD.value);
+
+    if (pemicu === 'r') {
+        d = r * 2;
+        sliderD.value = d; // Jika r diubah, d otomatis menyesuaikan
+    } else {
+        r = d / 2;
+        sliderR.value = r; // Jika d diubah, r otomatis menyesuaikan
+    }
+
+    // Update Teks Layar
+    document.getElementById('textR').innerText = r;
+    document.getElementById('textD2').innerText = d;
+    document.getElementById('formulaR').innerText = r;
+    document.getElementById('formulaD').innerText = d;
+
+    // Sinkronisasi ukuran visual lingkaran kedua (dikalikan 10)
+    let visualLingkaran2 = document.getElementById('visualLingkaran2');
+    visualLingkaran2.style.width = (d * 10) + "px";
+    visualLingkaran2.style.height = (d * 10) + "px";
+}
+
+// --- Logika Scene 4: Kuis Kartu Interaktif & Skoring ---
 let currentLevel = 0; 
 let totalSkor = 0;
 let poinSaatIni = 0;
@@ -94,7 +120,7 @@ function renderKuis() {
     document.getElementById('teksPetunjuk').innerText = soalData.petunjuk;
     document.getElementById('gambarSoal').src = soalData.gambarUtama;
     document.getElementById('feedbackKuis').innerHTML = "";
-    document.getElementById('dialogueKuis').innerText = `"Ayo hitung dengan teliti sebelum memilih! Nilai soal ini: ${poinSaatIni} poin"`;
+    document.getElementById('dialogueKuis').innerText = `"Hitung dengan teliti! Nilai soal ini: ${poinSaatIni} poin"`;
 
     let tempatPilihan = document.getElementById('tempatPilihan');
     tempatPilihan.innerHTML = ""; 
@@ -137,7 +163,6 @@ function cekJawabanKartu(kartuElement, tebakan) {
                 let skorBox = document.getElementById('skorBox');
                 skorBox.style.display = "block";
                 document.getElementById('nilaiSkor').innerText = totalSkor + " / 100";
-
                 document.getElementById('btnLanjutRefleksi').style.display = "inline-block";
             }, 2000);
         }
@@ -150,12 +175,12 @@ function cekJawabanKartu(kartuElement, tebakan) {
     }
 }
 
-// --- Logika Scene 4: Interaksi Refleksi & Rekap Data ---
+// --- Logika Scene 5: Refleksi & Rekap Data ---
 function setRating(element, teksPerasaan) {
     let emojis = element.parentElement.children;
     for (let emoji of emojis) { emoji.classList.remove('active'); }
     element.classList.add('active');
-    nilaiPerasaan = teksPerasaan; // Simpan nilai emoji untuk laporan WA
+    nilaiPerasaan = teksPerasaan;
 }
 
 function toggleTag(element) { element.classList.toggle('active'); }
@@ -163,16 +188,13 @@ function toggleTag(element) { element.classList.toggle('active'); }
 function kirimPantun() {
     let input = document.getElementById('inputPantun');
     let history = document.getElementById('chat-history');
-
     if (input.value.trim() !== "") {
         let bubbleSiswa = document.createElement('div');
         bubbleSiswa.className = 'chat-bubble';
         bubbleSiswa.innerText = "Kamu: " + input.value;
         history.appendChild(bubbleSiswa);
-        
-        pantunTerakhir = input.value; // Simpan pantun untuk laporan WA
+        pantunTerakhir = input.value;
         input.value = "";
-
         setTimeout(() => {
             let bubbleElSabar = document.createElement('div');
             bubbleElSabar.className = 'chat-bubble reply';
@@ -182,33 +204,24 @@ function kirimPantun() {
     }
 }
 
-// --- FUNGSI REKAP DAN KIRIM WA ---
 function prosesLaporan() {
     let nama = document.getElementById('inputNama').value;
     let kelas = document.getElementById('inputKelas').value;
-
-    // Validasi: Wajib isi nama dan kelas
     if(nama.trim() === "" || kelas.trim() === "") {
         alert("Hai Arsitek! Jangan lupa isi Nama dan Kelasmu dulu ya.");
         return;
     }
-
-    // Pindah ke Halaman Akhir (Scene 5) untuk Unduh Medali & Kirim WA
-    nextScene(5);
+    nextScene(6); // Masuk ke layar unduh medali
 }
 
 function kirimKeWhatsApp() {
-    // Ambil Data
     let nama = document.getElementById('inputNama').value;
     let kelas = document.getElementById('inputKelas').value;
-    
-    // Ambil semua tag kebingungan yang diklik
     let elemenTags = document.querySelectorAll('.tags .tag.active');
     let listBingung = [];
     elemenTags.forEach(el => listBingung.push(el.innerText));
     let teksBingung = listBingung.length > 0 ? listBingung.join(", ") : "Tidak menjawab";
 
-    // Susun Format Teks WhatsApp (%0A adalah kode Enter/Baris Baru untuk WA)
     let teksWA = `*LAPORAN MISI ARSITEK* 🏗️%0A%0A`;
     teksWA += `👤 *Nama:* ${nama}%0A`;
     teksWA += `🏫 *Kelas:* ${kelas}%0A`;
@@ -219,7 +232,6 @@ function kirimKeWhatsApp() {
     teksWA += `*Pantun Lingkaran:*%0A_" ${pantunTerakhir} "_%0A%0A`;
     teksWA += `Terima kasih!`;
 
-    // Buka link WhatsApp otomatis (Mendukung HP Android, iPhone, & Web)
     let urlWA = `https://api.whatsapp.com/send?phone=${nomorWhatsAppGuru}&text=${teksWA}`;
     window.open(urlWA, '_blank');
 }
