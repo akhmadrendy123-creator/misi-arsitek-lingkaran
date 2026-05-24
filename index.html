@@ -8,6 +8,10 @@
 </head>
 <body>
 
+    <audio id="bgm" src="assets/bgm.mp3" loop></audio>
+    <audio id="clickSound" src="assets/click.mp3"></audio>
+    <button id="musicToggleBtn" class="music-btn" onclick="toggleMusic()">🔇 Musik: OFF</button>
+
     <div class="container">
         <div class="progress-container">
             <div id="progress-bar" class="progress-bar"></div>
@@ -39,16 +43,15 @@
                 </div>
 
                 <div class="kalkulasi-box">
-                    <p style="font-size: 16px; margin: 5px 0;">Hasil Pengukuran Keliling (K) = <strong style="color:#28a745;"><span id="calcK">31.41592654</span></strong></p>
-                    <p style="font-size: 16px; margin: 5px 0;">Hasil Pengukuran Diameter (d) = <strong><span id="calcD">10</span></strong></p>
-                    
+                    <p style="font-size: 16px; margin: 5px 0;">Hasil Keliling (K) = <strong style="color:#28a745;"><span id="calcK">31.41592654</span></strong></p>
+                    <p style="font-size: 16px; margin: 5px 0;">Hasil Diameter (d) = <strong><span id="calcD">10</span></strong></p>
                     <div class="aljabar-container" id="aljabarArea" onclick="toggleAljabar()"></div>
                 </div>
             </div>
 
             <div class="character-box small">
                 <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
-                <p class="dialogue" style="font-size: 14px;">"Luar biasa! Sekarang yuk kita pelajari rahasia penting lainnya tentang jari-jari dan diameter di lab berikutnya!"</p>
+                <p class="dialogue" style="font-size: 14px;">"Luar biasa! Sekarang yuk kita pelajari rahasia jari-jari dan diameter di lab berikutnya!"</p>
             </div>
             
             <button class="btn-primary" onclick="nextScene(3)">Lanjut ke Lab Jari-jari & Diameter</button>
@@ -56,24 +59,20 @@
 
         <section id="scene-3" class="scene">
             <h2>Kegiatan 1B: Eksplorasi Jari-jari vs Diameter</h2>
-            <p>Coba geser salah satu penggeser di bawah ini dan perhatikan bagaimana nilai keduanya saling berhubungan!</p>
+            <p>Geser salah satu penggeser di bawah ini dan perhatikan hubungannya!</p>
             
             <div class="interactive-box" style="text-align: center;">
                 <div style="margin-bottom: 15px;">
-                    <label for="sliderR" style="font-weight: bold; font-size: 16px; color: #0284c7;">
-                        Atur Jari-jari (r): <span id="textR">5</span> meter
-                    </label><br>
+                    <label for="sliderR" style="font-weight: bold; font-size: 16px; color: #0284c7;">Atur Jari-jari (r): <span id="textR">5</span> m</label><br>
                     <input type="range" id="sliderR" min="0.5" max="10" value="5" step="0.5" oninput="updateRvsD('r')" style="width: 80%;">
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <label for="sliderD2" style="font-weight: bold; font-size: 16px; color: #b91c1c;">
-                        Atur Diameter (d): <span id="textD2">10</span> meter
-                    </label><br>
+                    <label for="sliderD2" style="font-weight: bold; font-size: 16px; color: #b91c1c;">Atur Diameter (d): <span id="textD2">10</span> m</label><br>
                     <input type="range" id="sliderD2" min="1" max="20" value="10" step="1" oninput="updateRvsD('d')" style="width: 80%;">
                 </div>
 
-                <div class="circle-container">
+                <div class="circle-container" style="height: 200px;">
                     <div id="visualLingkaran2" class="visual-lingkaran" style="width: 100px; height: 100px;">
                         <div class="garis-radius"></div>
                         <div class="garis-diameter2"></div>
@@ -81,45 +80,69 @@
                 </div>
 
                 <div class="kalkulasi-box" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
-                    <p style="font-size: 20px; font-weight: bold; color: #16a34a; margin: 5px 0;">Hubungan Unsur:</p>
-                    <p style="font-size: 18px; margin: 10px 0;">
-                        Diameter (d) = 2 × Jari-jari (r) &rarr; <strong style="color:#b91c1c;"><span id="formulaD">10</span></strong> = 2 × <strong style="color:#0284c7;"><span id="formulaR">5</span></strong>
-                    </p>
-                    <p style="font-size: 14px; color: #666; font-style: italic;">
-                        "Ingat! Jari-jari adalah setengah dari diameter. Jadi jika di kuis diketahui jari-jari, kalikan dua dulu untuk mendapat diameternya!"
-                    </p>
+                    <p style="font-size: 18px; font-weight: bold; color: #16a34a; margin: 5px 0;">Diameter (d) = 2 × Jari-jari (r)</p>
+                    <p style="font-size: 16px; margin: 5px 0;"><strong style="color:#b91c1c;"><span id="formulaD">10</span></strong> = 2 × <strong style="color:#0284c7;"><span id="formulaR">5</span></strong></p>
                 </div>
             </div>
 
             <div class="character-box small">
                 <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
-                <p class="dialogue" style="font-size: 14px;">"Sudah paham kan bedanya? Sekarang, mari kita uji kemampuan arsitekturmu di kuis proyek pembangunan!"</p>
+                <p class="dialogue" style="font-size: 14px;">"Ingat! Jari-jari adalah setengah dari diameter. Yuk lanjut ke pembuktian visual terakhir!"</p>
             </div>
             
-            <button class="btn-primary" onclick="nextScene(4)">Mulai Proyek Pembangunan (Kuis)</button>
+            <button class="btn-primary" onclick="nextScene(4)">Lanjut Pembuktian Keliling</button>
         </section>
 
         <section id="scene-4" class="scene">
+            <h2>Kegiatan 1C: Bukti Visual Keliling</h2>
+            <p>Apa sebenarnya keliling itu? Gulirkan roda ini sejauh 1 putaran penuh untuk melihat jejak catnya di tanah!</p>
+            
+            <div class="interactive-box" style="text-align: center; overflow: hidden; padding-bottom: 40px;">
+                <label for="sliderRoda" style="font-weight: bold; font-size: 16px; color: #16a34a;">
+                    Putar Roda: <span id="textPutaran">0.00</span> Putaran
+                </label><br>
+                <input type="range" id="sliderRoda" min="0" max="1" value="0" step="0.01" oninput="updateRoda()" style="width: 80%; margin: 15px 0;">
+
+                <div style="position: relative; height: 100px; width: 100%; border-bottom: 4px solid #475569; margin-top: 30px;">
+                    <div id="jejakCat" style="position: absolute; bottom: -4px; left: 30px; height: 4px; background-color: #ef4444; width: 0; transition: none;"></div>
+                    
+                    <div id="visualRoda" style="position: absolute; bottom: 0; left: 0; width: 60px; height: 60px; border: 4px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.1); transform-origin: center;">
+                        <div style="width: 4px; height: 50%; background: #333; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></div>
+                    </div>
+
+                    <div style="position: absolute; bottom: -25px; left: 30px; font-size: 12px; font-weight: bold; transform: translateX(-50%);">0</div>
+                    <div id="markerKeliling" style="position: absolute; bottom: -25px; left: 218.5px; font-size: 12px; font-weight: bold; color: #16a34a; transform: translateX(-50%);">Keliling (π × d)</div>
+                </div>
+
+                <div class="kalkulasi-box" style="margin-top: 40px; background: #fffbeb; border: 1px dashed #f59e0b;">
+                    <p style="font-size: 16px; margin: 0; font-weight: bold; color: #b45309;">💡 Jarak 1 Putaran Roda = Keliling Lingkaran</p>
+                </div>
+            </div>
+
+            <div class="character-box small">
+                <img src="assets/el-sabar.png" alt="El Sabar" class="character-img" onerror="this.src='https://via.placeholder.com/50?text=El+Sabar'" style="width: 60px;">
+                <p class="dialogue" style="font-size: 14px;">"Sekarang terbayang kan? Keliling adalah membentangkan garis lingkaran menjadi garis lurus. Saatnya kuis arsitek!"</p>
+            </div>
+            
+            <button class="btn-primary" onclick="nextScene(5)">Mulai Proyek Pembangunan (Kuis)</button>
+        </section>
+
+        <section id="scene-5" class="scene">
             <h2>Kegiatan 2: Proyek Pembangunan Jalan</h2>
             <p>Hitung dengan teliti dan pilih jawaban yang benar!</p>
             
             <div class="interactive-box blueprint-bg">
                 <div class="level-badge" id="levelBadge">Proyek 1: Taman Kecil</div>
-
                 <div class="visual-soal-container">
                     <img id="gambarSoal" src="assets/obj-taman.png" alt="Objek Soal" class="animasi-mengambang">
                 </div>
-
                 <p id="teksSoal" class="soal-teks">Jari-jari (r) taman adalah 7 meter. Berapa kelilingnya?</p>
                 <p id="teksPetunjuk" class="petunjuk-teks">(Petunjuk: Gunakan π = 22/7)</p>
-
                 <div class="options-grid" id="tempatPilihan"></div>
-
                 <div id="skorBox" class="skor-box" style="display: none;">
                     <p>Skor Sementaramu:</p>
                     <h1 id="nilaiSkor">0</h1>
                 </div>
-
                 <p id="feedbackKuis" class="result-text" style="color: white; margin-top:15px;"></p>
             </div>
 
@@ -128,10 +151,10 @@
                 <p class="dialogue" id="dialogueKuis" style="font-size: 14px;">"Ayo hitung dengan teliti sebelum memilih! Jika salah tebak, poinmu akan berkurang."</p>
             </div>
 
-            <button class="btn-primary" id="btnLanjutRefleksi" style="display:none;" onclick="nextScene(5)">Lanjut ke Laporan Akhir</button>
+            <button class="btn-primary" id="btnLanjutRefleksi" style="display:none;" onclick="nextScene(6)">Lanjut ke Laporan Akhir</button>
         </section>
 
-        <section id="scene-5" class="scene">
+        <section id="scene-6" class="scene">
             <h2>Laporan Akhir Misi</h2>
             
             <div class="reflection-box">
@@ -164,11 +187,10 @@
                     <button class="btn-secondary" onclick="kirimPantun()">Kirim</button>
                 </div>
             </div>
-
             <button class="btn-primary finish-btn" onclick="prosesLaporan()">Selesai & Kirim Laporan</button>
         </section>
 
-        <section id="scene-6" class="scene">
+        <section id="scene-7" class="scene">
             <h1 style="color: #28a745;">Misi Selesai!</h1>
             <p>Selamat! Kamu telah menjadi Arsitek Taman Ahli.</p>
             
